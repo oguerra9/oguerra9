@@ -27,6 +27,11 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 108, quoteNumber: 'AC127PC', lineOfBusiness: 15 }
     ];
 
+    linesOfBusiness.forEach(function(lineOfBusiness) {
+      const lineQuotes = recentQuotes.filter((quote) => quote.lineOfBusiness === lineOfBusiness.id);
+      Object.assign(lineOfBusiness, {quoteQuantity: lineQuotes.length});
+    });
+
     return {linesOfBusiness};
   }
 
@@ -38,4 +43,5 @@ export class InMemoryDataService implements InMemoryDbService {
   genId(linesOfBusiness: LineOfBusiness[]): number {
     return linesOfBusiness.length > 0 ? Math.max(...linesOfBusiness.map(lineOfBusiness => lineOfBusiness.id)) + 1 : 11;
   }
+
 }
